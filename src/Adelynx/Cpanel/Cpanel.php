@@ -15,7 +15,7 @@ class Cpanel {
     private $protocol		=	'https';
 
     // output that should be given by the xml-api
-    private $output		=	'simplexml';
+    private $output		=	'json';
 
     // literal strings hash or password
     private $auth_type 	= null;
