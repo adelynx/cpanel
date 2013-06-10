@@ -77,14 +77,16 @@ That's it! You're all set to go.
 
 <?php
 
+<?php
+
 class CpanelController extends Controller {
 
     public function getListAccounts()
     {        
          try {
 
-                  $listaccts = array(json_decode(Cpanel::listaccts(), true));
-                  return $listaccts;
+                $listaccts = array(json_decode(Cpanel::listaccts(), true));
+                return $listaccts;
 
          } catch (Exception $e) {
                 return 'Exception: ' .$e->getMessage();
