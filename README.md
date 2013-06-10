@@ -19,21 +19,15 @@ Next, update Composer from the Terminal:
 
 Once this operation completes add the service provider, aliases and configuration file. 
 
-1 - Provider: 
-
-    Open `app/config/app.php`, and add a new item to the providers array.
+1 - Provider: Open `app/config/app.php`, and add a new item to the providers array.
 
     'Adelynx\Cpanel\CpanelServiceProvider'
 
-2 - Aliases:
- 
-    Copy the file `Facades/Cpanel.php` into `/you_project_dir/vendor/laravel/framework/src/Illuminate/Support/Facades`, and add a new item to the aliases array.
+2 - Aliases: Copy the file `Facades/Cpanel.php` into `/you_project_dir/vendor/laravel/framework/src/Illuminate/Support/Facades`, and add a new item to the aliases array.
 
     'Cpanel' => 'Illuminate\Support\Facades\Cpanel',
 
-3 - Cpanel Configuration: 
-	
-    Copy the file `config/cpanel.php` into `you_project_dir/app/config/` folder, and add a new item to the aliases array.
+3 - Cpanel Configuration: Copy the file `config/cpanel.php` into `you_project_dir/app/config/` folder, and add a new item to the aliases array.
 
     'Cpanel' => 'Illuminate\Support\Facades\Cpanel',
 
@@ -87,7 +81,7 @@ class CpanelController extends Controller {
 	{        
 	        try {
 			
-			$listaccts = array(json_decode(Cpanel::listaccts(), true));
+				$listaccts = array(json_decode(Cpanel::listaccts(), true));
 	                return $listaccts;
 				
 	        } catch (Exception $e) {
