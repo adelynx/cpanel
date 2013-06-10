@@ -3,7 +3,7 @@
 class Cpanel {
 
     // should debugging statements be printed?
-    private $debug			= false;
+    private $debug    		= false;
 
     // The host to connect to
     private $host				=	'127.0.0.1';
@@ -15,7 +15,7 @@ class Cpanel {
     private $protocol		=	'https';
 
     // output that should be given by the xml-api
-    private $output		=	'json';
+    private $output		=	'simplexml';
 
     // literal strings hash or password
     private $auth_type 	= null;
@@ -31,31 +31,31 @@ class Cpanel {
     private $http_client		= 'curl';
 
     /**
-     * Instantiate the XML-API Object
-     * All parameters to this function are optional and can be set via the accessor functions or constants
-     * This defaults to password auth, however set_hash can be used to use hash authentication
-     *
-     * @param string $host The host to perform queries on
-     * @param string $user The username to authenticate as
-     * @param string $password The password to authenticate with
-     * @return Xml_Api object
-     */
+    * Instantiate the XML-API Object
+    * All parameters to this function are optional and can be set via the accessor functions or constants
+    * This defaults to password auth, however set_hash can be used to use hash authentication
+    *
+    * @param string $host The host to perform queries on
+    * @param string $user The username to authenticate as
+    * @param string $password The password to authenticate with
+    * @return Xml_Api object
+    */
     public function __construct($host = null, $user = null, $password = null )
     {
         // Check if debugging must be enabled
         if ( (defined('XMLAPI_DEBUG')) && (XMLAPI_DEBUG == '1') ) {
-            $this->debug = true;
+             $this->debug = true;
         }
 
         // Check if raw xml output must be enabled
         if ( (defined('XMLAPI_RAW_XML')) && (XMLAPI_RAW_XML == '1') ) {
-            $this->raw_xml = true;
+             $this->raw_xml = true;
         }
 
         /**
-         * Authentication
-         * This can either be passed at this point or by using the set_hash or set_password functions
-         **/
+        * Authentication
+        * This can either be passed at this point or by using the set_hash or set_password functions
+        **/
 
         if ( ( defined('XMLAPI_USER') ) && ( strlen(XMLAPI_USER) > 0 ) ) {
             $this->user = XMLAPI_USER;
@@ -95,10 +95,10 @@ class Cpanel {
         }
 
         /**
-         * Connection
-         *
-         * $host/XMLAPI_HOST should always be equal to either the IP of the server or it's hostname
-         */
+        * Connection
+        *
+        * $host/XMLAPI_HOST should always be equal to either the IP of the server or it's hostname
+        */
 
         // Set the host, error if not defined
         if ($host == null) {
@@ -128,84 +128,84 @@ class Cpanel {
     }
 
     /**
-     * Accessor Functions
-     **/
+    * Accessor Functions
+    **/
     /**
-     * Return whether the debug option is set within the object
-     *
-     * @return boolean
-     * @see set_debug()
-     */
+    * Return whether the debug option is set within the object
+    *
+    * @return boolean
+    * @see set_debug()
+    */
     public function get_debug()
     {
         return $this->debug;
     }
 
     /**
-     * Turn on debug mode
-     *
-     * Enabling this option will cause this script to print debug information such as
-     * the queries made, the response XML/JSON and other such pertinent information.
-     * Calling this function without any parameters will enable debug mode.
-     *
-     * @param bool $debug turn on or off debug mode
-     * @see get_debug()
-     */
+    * Turn on debug mode
+    *
+    * Enabling this option will cause this script to print debug information such as
+    * the queries made, the response XML/JSON and other such pertinent information.
+    * Calling this function without any parameters will enable debug mode.
+    *
+    * @param bool $debug turn on or off debug mode
+    * @see get_debug()
+    */
     public function set_debug( $debug = 1 )
     {
         $this->debug = $debug;
     }
 
     /**
-     * Get the host being connected to
-     *
-     * This function will return the host being connected to
-     * @return string host
-     * @see set_host()
-     */
+    * Get the host being connected to
+    *
+    * This function will return the host being connected to
+    * @return string host
+    * @see set_host()
+    */
     public function get_host()
     {
         return $this->host;
     }
 
     /**
-     * Set the host to query
-     *
-     * Setting this will set the host to be queried
-     * @param string $host The host to query
-     * @see get_host()
-     */
+    * Set the host to query
+    *
+    * Setting this will set the host to be queried
+    * @param string $host The host to query
+    * @see get_host()
+    */
     public function set_host( $host )
     {
         $this->host = $host;
     }
 
     /**
-     * Get the port to connect to
-     *
-     * This will return which port the class is connecting to
-     * @return int $port
-     * @see set_port()
-     */
+    * Get the port to connect to
+    *
+    * This will return which port the class is connecting to
+    * @return int $port
+    * @see set_port()
+    */
     public function get_port()
     {
         return $this->port;
     }
 
     /**
-     * Set the port to connect to
-     *
-     * This will allow a user to define which port needs to be connected to.
-     * The default port set within the class is 2087 (WHM-SSL) however other ports are optional
-     * this function will automatically set the protocol to http if the port is equal to:
-     *    - 2082
-     *    - 2086
-     *    - 2095
-     *    - 80
-     * @param int $port the port to connect to
-     * @see set_protocol()
-     * @see get_port()
-     */
+    * Set the port to connect to
+    *
+    * This will allow a user to define which port needs to be connected to.
+    * The default port set within the class is 2087 (WHM-SSL) however other ports are optional
+    * this function will automatically set the protocol to http if the port is equal to:
+    *    - 2082
+    *    - 2086
+    *    - 2095
+    *    - 80
+    * @param int $port the port to connect to
+    * @see set_protocol()
+    * @see get_port()
+    */
     public function set_port( $port )
     {
         if ( !is_int( $port ) ) {
@@ -225,26 +225,26 @@ class Cpanel {
     }
 
     /**
-     * Return the protocol being used to query
-     *
-     * This will return the protocol being connected to
-     * @return string
-     * @see set_protocol()
-     */
+    * Return the protocol being used to query
+    *
+    * This will return the protocol being connected to
+    * @return string
+    * @see set_protocol()
+    */
     public function get_protocol()
     {
         return $this->protocol;
     }
 
     /**
-     * Set the protocol to use to query
-     *
-     * This will allow you to set the protocol to query cpsrvd with.  The only to acceptable values
-     * to be passed to this function are 'http' or 'https'.  Anything else will cause the class to throw
-     * an Exception.
-     * @param string $proto the protocol to use to connect to cpsrvd
-     * @see get_protocol()
-     */
+    * Set the protocol to use to query
+    *
+    * This will allow you to set the protocol to query cpsrvd with.  The only to acceptable values
+    * to be passed to this function are 'http' or 'https'.  Anything else will cause the class to throw
+    * an Exception.
+    * @param string $proto the protocol to use to connect to cpsrvd
+    * @see get_protocol()
+    */
     public function set_protocol( $proto )
     {
         if ($proto != 'https' && $proto != 'http') {
@@ -254,36 +254,36 @@ class Cpanel {
     }
 
     /**
-     * Return what format calls with be returned in
-     *
-     * This function will return the currently set output format
-     * @see set_output()
-     * @return string
-     */
+    * Return what format calls with be returned in
+    *
+    * This function will return the currently set output format
+    * @see set_output()
+    * @return string
+    */
     public function get_output()
     {
         return $this->output;
     }
 
     /**
-     * Set the output format for call functions
-     *
-     * This class is capable of returning data in numerous formats including:
-     *   - json
-     *   - xml
-     *   - {@link http://php.net/simplexml SimpleXML}
-     *   - {@link http://us.php.net/manual/en/language.types.array.php Associative Arrays}
-     *
-     * These can be set by passing this class any of the following values:
-     *   - json - return JSON string
-     *   - xml - return XML string
-     *   - simplexml - return SimpleXML object
-     *   - array - Return an associative array
-     *
-     * Passing any value other than these to this class will cause an Exception to be thrown.
-     * @param string $output the output type to be set
-     * @see get_output()
-     */
+    * Set the output format for call functions
+    *
+    * This class is capable of returning data in numerous formats including:
+    *   - json
+    *   - xml
+    *   - {@link http://php.net/simplexml SimpleXML}
+    *   - {@link http://us.php.net/manual/en/language.types.array.php Associative Arrays}
+    *
+    * These can be set by passing this class any of the following values:
+    *   - json - return JSON string
+    *   - xml - return XML string
+    *   - simplexml - return SimpleXML object
+    *   - array - Return an associative array
+    *
+    * Passing any value other than these to this class will cause an Exception to be thrown.
+    * @param string $output the output type to be set
+    * @see get_output()
+    */
     public function set_output( $output )
     {
         if ($output != 'json' && $output != 'xml' && $output != 'array' && $output != 'simplexml') {
@@ -293,31 +293,31 @@ class Cpanel {
     }
 
     /**
-     * Return the auth_type being used
-     *
-     * This function will return a string containing the auth type in use
-     * @return string auth type
-     * @see set_auth_type()
-     */
+    * Return the auth_type being used
+    *
+    * This function will return a string containing the auth type in use
+    * @return string auth type
+    * @see set_auth_type()
+    */
     public function get_auth_type()
     {
         return $this->auth_type;
     }
 
     /**
-     * Set the auth type
-     *
-     * This class is capable of authenticating with both hash auth and password auth
-     * This function will allow you to manually set which auth_type you are using.
-     *
-     * the only accepted parameters for this function are "hash" and "pass" anything else will cuase
-     * an exception to be thrown
-     *
-     * @see set_password()
-     * @see set_hash()
-     * @see get_auth_type()
-     * @param string auth_type the auth type to be set
-     */
+    * Set the auth type
+    *
+    * This class is capable of authenticating with both hash auth and password auth
+    * This function will allow you to manually set which auth_type you are using.
+    *
+    * the only accepted parameters for this function are "hash" and "pass" anything else will cuase
+    * an exception to be thrown
+    *
+    * @see set_password()
+    * @see set_hash()
+    * @see get_auth_type()
+    * @param string auth_type the auth type to be set
+    */
     public function set_auth_type( $auth_type )
     {
         if ($auth_type != 'hash' && $auth_type != 'pass') {
@@ -327,16 +327,16 @@ class Cpanel {
     }
 
     /**
-     * Set the password to be autenticated with
-     *
-     * This will set the password to be authenticated with, the auth_type will be automatically adjusted
-     * when this function is used
-     *
-     * @param string $pass the password to authenticate with
-     * @see set_hash()
-     * @see set_auth_type()
-     * @see set_user()
-     */
+    * Set the password to be autenticated with
+    *
+    * This will set the password to be authenticated with, the auth_type will be automatically adjusted
+    * when this function is used
+    *
+    * @param string $pass the password to authenticate with
+    * @see set_hash()
+    * @see set_auth_type()
+    * @see set_user()
+    */
     public function set_password( $pass )
     {
         $this->auth_type = 'pass';
@@ -344,15 +344,15 @@ class Cpanel {
     }
 
     /**
-     * Set the hash to authenticate with
-     *
-     * This will set the hash to authenticate with, the auth_type will automatically be set when this function
-     * is used.  This function will automatically strip the newlines from the hash.
-     * @param string $hash the hash to autenticate with
-     * @see set_password()
-     * @see set_auth_type()
-     * @see set_user()
-     */
+    * Set the hash to authenticate with
+    *
+    * This will set the hash to authenticate with, the auth_type will automatically be set when this function
+    * is used.  This function will automatically strip the newlines from the hash.
+    * @param string $hash the hash to autenticate with
+    * @see set_password()
+    * @see set_auth_type()
+    * @see set_user()
+    */
     public function set_hash( $hash )
     {
         $this->auth_type = 'hash';
@@ -360,41 +360,41 @@ class Cpanel {
     }
 
     /**
-     * Return the user being used for authtication
-     *
-     * This will return the username being authenticated against.
-     *
-     * @return string
-     */
+    * Return the user being used for authtication
+    *
+    * This will return the username being authenticated against.
+    *
+    * @return string
+    */
     public function get_user()
     {
         return $this->user;
     }
 
     /**
-     * Set the user to authenticate against
-     *
-     * This will set the user being authenticated against.
-     * @param string $user username
-     * @see set_password()
-     * @see set_hash()
-     * @see get_user()
-     */
+    * Set the user to authenticate against
+    *
+    * This will set the user being authenticated against.
+    * @param string $user username
+    * @see set_password()
+    * @see set_hash()
+    * @see get_user()
+    */
     public function set_user( $user )
     {
         $this->user = $user;
     }
 
     /**
-     * Set the user and hash to be used for authentication
-     *
-     * This function will allow one to set the user AND hash to be authenticated with
-     *
-     * @param string $user username
-     * @param string $hash WHM Access Hash
-     * @see set_hash()
-     * @see set_user()
-     */
+    * Set the user and hash to be used for authentication
+    *
+    * This function will allow one to set the user AND hash to be authenticated with
+    *
+    * @param string $user username
+    * @param string $hash WHM Access Hash
+    * @see set_hash()
+    * @see set_user()
+    */
     public function hash_auth( $user, $hash )
     {
         $this->set_hash( $hash );
@@ -402,14 +402,14 @@ class Cpanel {
     }
 
     /**
-     * Set the user and password to be used for authentication
-     *
-     * This function will allow one to set the user AND password to be authenticated with
-     * @param string $user username
-     * @param string $pass password
-     * @see set_pass()
-     * @see set_user()
-     */
+    * Set the user and password to be used for authentication
+    *
+    * This function will allow one to set the user AND password to be authenticated with
+    * @param string $user username
+    * @param string $pass password
+    * @see set_pass()
+    * @see set_user()
+    */
     public function password_auth( $user, $pass )
     {
         $this->set_password( $pass );
@@ -417,46 +417,46 @@ class Cpanel {
     }
 
     /**
-     * Return XML format
-     *
-     * this function will cause call functions to return XML format, this is the same as doing:
-     *   set_output('xml')
-     *
-     * @see set_output()
-     */
+    * Return XML format
+    *
+    * this function will cause call functions to return XML format, this is the same as doing:
+    *   set_output('xml')
+    *
+    * @see set_output()
+    */
     public function return_xml()
     {
         $this->set_output('xml');
     }
 
     /**
-     * Return simplexml format
-     *
-     * this function will cause all call functions to return simplexml format, this is the same as doing:
-     *   set_output('simplexml')
-     *
-     * @see set_output()
-     */
+    * Return simplexml format
+    *
+    * this function will cause all call functions to return simplexml format, this is the same as doing:
+    *   set_output('simplexml')
+    *
+    * @see set_output()
+    */
     public function return_object()
     {
         $this->set_output('simplexml');
     }
 
     /**
-     * Set the HTTP client to use
-     *
-     * This class is capable of two types of HTTP Clients:
-     *   - curl
-     *   - fopen
-     *
-     * When using allow url fopen the class will use get_file_contents to perform the query
-     * The only two acceptable parameters for this function are 'curl' and 'fopen'.
-     * This will default to fopen, however if allow_url_fopen is disabled inside of php.ini
-     * it will switch to curl
-     *
+    * Set the HTTP client to use
+    *
+    * This class is capable of two types of HTTP Clients:
+    *   - curl
+    *   - fopen
+    *
+    * When using allow url fopen the class will use get_file_contents to perform the query
+    * The only two acceptable parameters for this function are 'curl' and 'fopen'.
+    * This will default to fopen, however if allow_url_fopen is disabled inside of php.ini
+    * it will switch to curl
+    *
      * @param string client The http client to use
-     * @see get_http_client()
-     */
+    * @see get_http_client()
+    */
 
     public function set_http_client( $client )
     {
@@ -467,33 +467,33 @@ class Cpanel {
     }
 
     /**
-     * Get the HTTP Client in use
-     *
-     * This will return a string containing the HTTP client currently in use
-     *
-     * @see set_http_client()
-     * @return string
-     */
+    * Get the HTTP Client in use
+    *
+    * This will return a string containing the HTTP client currently in use
+    *
+    * @see set_http_client()
+    * @return string
+    */
     public function get_http_client()
     {
         return $this->http_client;
     }
 
-    /*
-   *	Query Functions
-   *	--
-   *	This is where the actual calling of the XML-API, building API1 & API2 calls happens
-   */
+     /*
+    *	Query Functions
+    *	--
+    *	This is where the actual calling of the XML-API, building API1 & API2 calls happens
+    */
 
     /**
-     * Perform an XML-API Query
-     *
-     * This function will perform an XML-API Query and return the specified output format of the call being made
-     *
-     * @param string $function The XML-API call to execute
-     * @param array $vars An associative array of the parameters to be passed to the XML-API Calls
-     * @return mixed
-     */
+    * Perform an XML-API Query
+    *
+    * This function will perform an XML-API Query and return the specified output format of the call being made
+    *
+    * @param string $function The XML-API call to execute
+    * @param array $vars An associative array of the parameters to be passed to the XML-API Calls
+    * @return mixed
+    */
     public function xmlapi_query( $function, $vars = array() )
     {
         // Check to make sure all the data needed to perform the query is in place
@@ -582,9 +582,9 @@ class Cpanel {
         if ( ($this->output == 'simplexml') || $this->output == 'array') {
             $response = simplexml_load_string($response, null, LIBXML_NOERROR | LIBXML_NOWARNING);
             if (!$response) {
-                error_log("Some error message here");
+                    error_log("Some error message here");
 
-                return;
+                    return;
             }
             if ($this->debug) {
                 error_log("SimpleXML var_dump:\n" . print_r($response, true));
@@ -607,7 +607,7 @@ class Cpanel {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         // Return contents of transfer on curl_exec
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         // Allow self-signed certs
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         // Set the URL
@@ -644,9 +644,9 @@ class Cpanel {
                 'allow_self_signed' => true,
                 'method' => 'POST',
                 'header' => $authstr .
-                "Content-Type: application/x-www-form-urlencoded\r\n" .
-                "Content-Length: " . strlen($postdata) . "\r\n" .
-                "\r\n" . $postdata
+                    "Content-Type: application/x-www-form-urlencoded\r\n" .
+                    "Content-Length: " . strlen($postdata) . "\r\n" .
+                    "\r\n" . $postdata
             )
         );
         $context = stream_context_create($opts);
@@ -683,20 +683,20 @@ class Cpanel {
       Implement API1 and API2 query functions!!!!!
     */
     /**
-     * Call an API1 function
-     *
-     * This function allows you to call API1 from within the XML-API,  This allowes a user to peform actions
-     * such as adding ftp accounts, etc
-     *
-     * @param string $user The username of the account to perform API1 actions on
-     * @param string $module The module of the API1 call to use
-     * @param string $function The function of the API1 call
-     * @param array $args The arguments for the API1 function, this should be a non-associative array
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CallingAPIFunctions XML API Call documentation
-     * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiRef/WebHome API1 & API2 Call documentation
-     * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiBasics/CallingApiOne API1 Documentation
-     */
+    * Call an API1 function
+    *
+    * This function allows you to call API1 from within the XML-API,  This allowes a user to peform actions
+    * such as adding ftp accounts, etc
+    *
+    * @param string $user The username of the account to perform API1 actions on
+    * @param string $module The module of the API1 call to use
+    * @param string $function The function of the API1 call
+    * @param array $args The arguments for the API1 function, this should be a non-associative array
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CallingAPIFunctions XML API Call documentation
+    * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiRef/WebHome API1 & API2 Call documentation
+    * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiBasics/CallingApiOne API1 Documentation
+    */
     public function api1_query($user, $module, $function, $args = array() )
     {
         if ( !isset($module) || !isset($function) || !isset($user) ) {
@@ -724,11 +724,11 @@ class Cpanel {
         }
 
         $call = array(
-            $cpuser => $user,
-            $module_type => $module,
-            $func_type => $function,
-            $api_type => '1'
-        );
+                $cpuser => $user,
+                $module_type => $module,
+                $func_type => $function,
+                $api_type => '1'
+            );
         for ($int = 0; $int < count($args);  $int++) {
             $call['arg-' . $int] = $args[$int];
         }
@@ -737,21 +737,21 @@ class Cpanel {
     }
 
     /**
-     * Call an API2 Function
-     *
-     * This function allows you to call an API2 function, this is the modern API for cPanel and should be used in preference over
-     * API1 when possible
-     *
-     * @param string $user The username of the account to perform API2 actions on
-     * @param string $module The module of the API2 call to use
-     * @param string $function The function of the API2 call
-     * @param array $args An associative array containing the arguments for the API2 call
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CallingAPIFunctions XML API Call documentation
-     * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiRef/WebHome API1 & API2 Call documentation
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ApiTwo Legacy API2 Documentation
-     * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiBasics/CallingApiTwo API2 Documentation
-     */
+    * Call an API2 Function
+    *
+    * This function allows you to call an API2 function, this is the modern API for cPanel and should be used in preference over
+    * API1 when possible
+    *
+    * @param string $user The username of the account to perform API2 actions on
+    * @param string $module The module of the API2 call to use
+    * @param string $function The function of the API2 call
+    * @param array $args An associative array containing the arguments for the API2 call
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CallingAPIFunctions XML API Call documentation
+    * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiRef/WebHome API1 & API2 Call documentation
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ApiTwo Legacy API2 Documentation
+    * @link http://docs.cpanel.net/twiki/bin/view/DeveloperResources/ApiBasics/CallingApiTwo API2 Documentation
+    */
 
     public function api2_query($user, $module, $function, $args = array())
     {
@@ -791,13 +791,13 @@ class Cpanel {
     ####
 
     /**
-     * Return a list of available XML-API calls
-     *
-     * This function will return an array containing all applications available within the XML-API
-     *
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListAvailableCalls XML API Call documentation
-     */
+    * Return a list of available XML-API calls
+    *
+    * This function will return an array containing all applications available within the XML-API
+    *
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListAvailableCalls XML API Call documentation
+    */
     public function applist()
     {
         return $this->xmlapi_query('applist');
@@ -808,21 +808,21 @@ class Cpanel {
     ####
 
     /**
-     * Create a cPanel Account
-     *
-     * This function will allow one to create an account, the $acctconf parameter requires that the follow
-     * three associations are defined:
-     *	- username
-     *	- password
-     *	- domain
-     *
-     * Failure to prive these will cause an error to be logged.  Any other key/value pairs as defined by the createaccount call
-     * documentation are allowed parameters for this call.
-     *
-     * @param array $acctconf
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CreateAccount XML API Call documentation
-     */
+    * Create a cPanel Account
+    *
+    * This function will allow one to create an account, the $acctconf parameter requires that the follow
+    * three associations are defined:
+    *	- username
+    *	- password
+    *	- domain
+    *
+    * Failure to prive these will cause an error to be logged.  Any other key/value pairs as defined by the createaccount call
+    * documentation are allowed parameters for this call.
+    *
+    * @param array $acctconf
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CreateAccount XML API Call documentation
+    */
 
     public function createacct($acctconf)
     {
@@ -841,15 +841,15 @@ class Cpanel {
     }
 
     /**
-     * Change a cPanel Account's Password
-     *
-     * This function will allow you to change the password of a cpanel account
-     *
-     * @param string $username The username to change the password of
-     * @param string $pass The new password for the cPanel Account
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ChangePassword XML API Call documentation
-     */
+    * Change a cPanel Account's Password
+    *
+    * This function will allow you to change the password of a cpanel account
+    *
+    * @param string $username The username to change the password of
+    * @param string $pass The new password for the cPanel Account
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ChangePassword XML API Call documentation
+    */
     public function passwd($username, $pass)
     {
         if (!isset($username) || !isset($pass)) {
@@ -862,15 +862,15 @@ class Cpanel {
     }
 
     /**
-     * Limit an account's monthly bandwidth usage
-     *
-     * This function will set an account's bandwidth limit.
-     *
-     * @param string $username The username of the cPanel account to modify
-     * @param int $bwlimit The new bandwidth limit in megabytes
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LimitBandwidth XML API Call documentation
-     */
+    * Limit an account's monthly bandwidth usage
+    *
+    * This function will set an account's bandwidth limit.
+    *
+    * @param string $username The username of the cPanel account to modify
+    * @param int $bwlimit The new bandwidth limit in megabytes
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LimitBandwidth XML API Call documentation
+    */
     public function limitbw($username, $bwlimit)
     {
         if (!isset($username) || !isset($bwlimit)) {
@@ -883,15 +883,15 @@ class Cpanel {
     }
 
     /**
-     * List accounts on Server
-     *
-     * This call will return a list of account on a server, either no parameters or both parameters may be passed to this function.
-     *
-     * @param string $searchtype Type of account search to use, allowed values: domain, owner, user, ip or package
-     * @param string $search the string to search against
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListAccounts XML API Call documentation
-     */
+    * List accounts on Server
+    *
+    * This call will return a list of account on a server, either no parameters or both parameters may be passed to this function.
+    *
+    * @param string $searchtype Type of account search to use, allowed values: domain, owner, user, ip or package
+    * @param string $search the string to search against
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListAccounts XML API Call documentation
+    */
     public function listaccts($searchtype = null, $search = null)
     {
         if ($search) {
@@ -902,16 +902,16 @@ class Cpanel {
     }
 
     /**
-     * Modify a cPanel account
-     *
-     * This call will allow you to change limitations and information about an account.  See the XML API call documentation for a list of
-     * acceptable values for args.
-     *
-     * @param string $username The username to modify
-     * @param array $args the new values for the modified account (see {@link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount modifyacct documentation})
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount XML API Call documentation
-     */
+    * Modify a cPanel account
+    *
+    * This call will allow you to change limitations and information about an account.  See the XML API call documentation for a list of
+    * acceptable values for args.
+    *
+    * @param string $username The username to modify
+    * @param array $args the new values for the modified account (see {@link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount modifyacct documentation})
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ModifyAccount XML API Call documentation
+    */
     public function modifyacct($username, $args = array())
     {
         if (!isset($username)) {
@@ -930,15 +930,15 @@ class Cpanel {
     }
 
     /**
-     * Edit a cPanel Account's Quota
-     *
-     * This call will allow you to change a cPanel account's quota
-     *
-     * @param string $username The username of the account to modify the quota.
-     * @param int $quota the new quota in megabytes
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditQuota XML API Call documentation
-     */
+    * Edit a cPanel Account's Quota
+    *
+    * This call will allow you to change a cPanel account's quota
+    *
+    * @param string $username The username of the account to modify the quota.
+    * @param int $quota the new quota in megabytes
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditQuota XML API Call documentation
+    */
     public function editquota($username, $quota)
     {
         if (!isset($username) || !isset($quota)) {
@@ -951,22 +951,22 @@ class Cpanel {
     }
 
     /**
-     * Return a summary of the account's information
-     *
-     * This call will return a brief report of information about an account, such as:
-     *	- Disk Limit
-     *	- Disk Used
-     *	- Domain
-     *	- Account Email
-     *	- Theme
-     * 	- Start Data
-     *
-     * Please see the XML API Call documentation for more information on what is returned by this call
-     *
-     * @param string $username The username to retrieve a summary of
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ShowAccountInformation XML API Call documenation
-     */
+    * Return a summary of the account's information
+    *
+    * This call will return a brief report of information about an account, such as:
+    *	- Disk Limit
+    *	- Disk Used
+    *	- Domain
+    *	- Account Email
+    *	- Theme
+    * 	- Start Data
+    *
+    * Please see the XML API Call documentation for more information on what is returned by this call
+    *
+    * @param string $username The username to retrieve a summary of
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ShowAccountInformation XML API Call documenation
+    */
     public function accountsummary($username)
     {
         if (!isset($username)) {
@@ -979,16 +979,16 @@ class Cpanel {
     }
 
     /**
-     * Suspend a User's Account
-     *
-     * This function will suspend the specified cPanel users account.
-     * The $reason parameter is optional, but can contain a string of any length
-     *
-     * @param string $username The username to suspend
-     * @param string $reason The reason for the suspension
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SuspendAccount XML API Call documentation
-     */
+    * Suspend a User's Account
+    *
+    * This function will suspend the specified cPanel users account.
+    * The $reason parameter is optional, but can contain a string of any length
+    *
+    * @param string $username The username to suspend
+    * @param string $reason The reason for the suspension
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SuspendAccount XML API Call documentation
+    */
     public function suspendacct($username, $reason = null)
     {
         if (!isset($username)) {
@@ -1004,29 +1004,29 @@ class Cpanel {
     }
 
     /**
-     * List suspended accounts on a server
-     *
-     * This function will return an array containing all the suspended accounts on a server
-     *
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListSuspended XML API Call documentation
-     */
+    * List suspended accounts on a server
+    *
+    * This function will return an array containing all the suspended accounts on a server
+    *
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListSuspended XML API Call documentation
+    */
     public function listsuspended()
     {
         return $this->xmlapi_query('listsuspended');
     }
 
     /**
-     * Remove an Account
-     *
-     * This XML API call will remove an account on the server
-     * The $keepdns parameter is optional, when enabled this will leave the DNS zone on the server
-     *
-     * @param string $username The usename to delete
-     * @param bool $keepdns When pass a true value, the DNS zone will be retained
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/TerminateAccount
-     */
+    * Remove an Account
+    *
+    * This XML API call will remove an account on the server
+    * The $keepdns parameter is optional, when enabled this will leave the DNS zone on the server
+    *
+    * @param string $username The usename to delete
+    * @param bool $keepdns When pass a true value, the DNS zone will be retained
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/TerminateAccount
+    */
     public function removeacct($username, $keepdns = false)
     {
         if (!isset($username)) {
@@ -1042,13 +1042,13 @@ class Cpanel {
     }
 
     /**
-     * Unsuspend an Account
-     *
-     * This XML API call will unsuspend an account
-     *
-     * @param string $username The username to unsuspend
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/UnsuspendAcount XML API Call documentation
+    * Unsuspend an Account
+    *
+    * This XML API call will unsuspend an account
+    *
+    * @param string $username The username to unsuspend
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/UnsuspendAcount XML API Call documentation
      */
     public function unsuspendacct($username)
     {
@@ -1062,15 +1062,15 @@ class Cpanel {
     }
 
     /**
-     * Change an Account's Package
-     *
-     * This XML API will change the package associated account.
-     *
-     * @param string $username the username to change the package of
-     * @param string $pkg The package to change the account to.
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ChangePackage XML API Call documentation
-     */
+    * Change an Account's Package
+    *
+    * This XML API will change the package associated account.
+    *
+    * @param string $username the username to change the package of
+    * @param string $pkg The package to change the account to.
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ChangePackage XML API Call documentation
+    */
     public function changepackage($username, $pkg)
     {
         if (!isset($username) || !isset($pkg)) {
@@ -1083,12 +1083,12 @@ class Cpanel {
     }
 
     /**
-     * Return the privileges a reseller has in WHM
-     *
-     * This will return a list of the privileges that a reseller has to WHM
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ViewPrivileges XML API Call documentation
-     */
+    * Return the privileges a reseller has in WHM
+    *
+    * This will return a list of the privileges that a reseller has to WHM
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ViewPrivileges XML API Call documentation
+    */
     public function myprivs()
     {
         return $this->xmlapi_query('myprivs');
@@ -1096,15 +1096,15 @@ class Cpanel {
 
 
     /**
-     * Display Data about a Virtual Host
-     *
-     * This function will return information about a specific domain.  This data is essentially a representation of the data
-     * Contained in the httpd.conf VirtualHost for the domain.
-     *
-     * @return mixed
-     * @param string $domain The domain to fetch information for
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DomainUserData
-     */
+    * Display Data about a Virtual Host
+    *
+    * This function will return information about a specific domain.  This data is essentially a representation of the data
+    * Contained in the httpd.conf VirtualHost for the domain.
+    *
+    * @return mixed
+    * @param string $domain The domain to fetch information for
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DomainUserData
+    */
 
     public function domainuserdata( $domain )
     {
@@ -1118,16 +1118,16 @@ class Cpanel {
     }
 
     /**
-     * Change a site's IP Address
-     *
-     * This function will allow you to change the IP address that a domain listens on.
-     * In order to properly call this function Either $user or $domain parameters must be defined
-     * @param string $ip The $ip address to change the account or domain to
-     * @param string $user The username to change the IP of
-     * @param string $domain The domain to change the IP of
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetSiteIp XML API Call documentation
-     */
+    * Change a site's IP Address
+    *
+    * This function will allow you to change the IP address that a domain listens on.
+    * In order to properly call this function Either $user or $domain parameters must be defined
+    * @param string $ip The $ip address to change the account or domain to
+    * @param string $user The username to change the IP of
+    * @param string $domain The domain to change the IP of
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetSiteIp XML API Call documentation
+    */
     public function setsiteip ( $ip, $user = null, $domain = null )
     {
         if ( !isset($ip) ) {
@@ -1155,16 +1155,16 @@ class Cpanel {
 
     // This API function lets you create a DNS zone.
     /**
-     * Add a DNS Zone
-     *
-     * This XML API function will create a DNS Zone.  This will use the "standard" template when
-     * creating the zone.
-     *
-     * @param string $domain The DNS Domain that you wish to create a zone for
-     * @param string $ip The IP you want the domain to resolve to
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddDNSZone XML API Call documentation
-     */
+    * Add a DNS Zone
+    *
+    * This XML API function will create a DNS Zone.  This will use the "standard" template when
+    * creating the zone.
+    *
+    * @param string $domain The DNS Domain that you wish to create a zone for
+    * @param string $ip The IP you want the domain to resolve to
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddDNSZone XML API Call documentation
+    */
     public function adddns($domain, $ip)
     {
         if (!isset($domain) || !isset($ip)) {
@@ -1177,17 +1177,17 @@ class Cpanel {
     }
 
     /**
-     * Add a record to a zone
-     *
-     * This will append a record to a DNS Zone.  The $args argument to this function
-     * must be an associative array containing information about the DNS zone, please
-     * see the XML API Call documentation for more info
-     *
-     * @param string $zone The DNS zone that you want to add the record to
-     * @param array $args Associative array representing the record to be added
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddZoneRecord XML API Call documentation
-     */
+    * Add a record to a zone
+    *
+    * This will append a record to a DNS Zone.  The $args argument to this function
+    * must be an associative array containing information about the DNS zone, please
+    * see the XML API Call documentation for more info
+    *
+    * @param string $zone The DNS zone that you want to add the record to
+    * @param array $args Associative array representing the record to be added
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddZoneRecord XML API Call documentation
+    */
     public function addzonerecord( $zone, $args )
     {
         if (!is_array($args)) {
@@ -1202,19 +1202,19 @@ class Cpanel {
     }
 
     /**
-     * Edit a Zone Record
-     *
-     * This XML API Function will allow you to edit an existing DNS Zone Record.
-     * This works by passing in the line number of the record you wish to edit.
-     * Line numbers can be retrieved with dumpzone()
-     *
-     * @param string $zone The zone to edit
-     * @param int $line The line number of the zone to edit
-     * @param array $args An associative array representing the zone record
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditZoneRecord XML API Call documentation
-     * @see dumpzone()
-     */
+    * Edit a Zone Record
+    *
+    * This XML API Function will allow you to edit an existing DNS Zone Record.
+    * This works by passing in the line number of the record you wish to edit.
+    * Line numbers can be retrieved with dumpzone()
+    *
+    * @param string $zone The zone to edit
+    * @param int $line The line number of the zone to edit
+    * @param array $args An associative array representing the zone record
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditZoneRecord XML API Call documentation
+    * @see dumpzone()
+    */
 
     public function editzonerecord( $zone, $line, $args )
     {
@@ -1231,29 +1231,29 @@ class Cpanel {
     }
 
     /**
-     * Retrieve a DNS Record
-     *
-     * This function will return a data structure representing a DNS record, to
-     * retrieve all lines see dumpzone.
-     * @param string $zone The zone that you want to retrieve a record from
-     * @param string $line The line of the zone that you want to retrieve
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GetZoneRecord XML API Call documentation
-     */
+    * Retrieve a DNS Record
+    *
+    * This function will return a data structure representing a DNS record, to
+    * retrieve all lines see dumpzone.
+    * @param string $zone The zone that you want to retrieve a record from
+    * @param string $line The line of the zone that you want to retrieve
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GetZoneRecord XML API Call documentation
+    */
     public function getzonerecord( $zone, $line )
     {
         return $this->xmlapi_query('getzonerecord', array( 'domain' => $zone, 'Line' => $line ) );
     }
 
     /**
-     * Remove a DNS Zone
-     *
-     * This function will remove a DNS Zone from the server
-     *
-     * @param string $domain The domain to be remove
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteDNSZone XML API Call documentation
-     */
+    * Remove a DNS Zone
+    *
+    * This function will remove a DNS Zone from the server
+    *
+    * @param string $domain The domain to be remove
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteDNSZone XML API Call documentation
+    */
     public function killdns($domain)
     {
         if (!isset($domain)) {
@@ -1266,28 +1266,28 @@ class Cpanel {
     }
 
     /**
-     * Return a List of all DNS Zones on the server
-     *
-     * This XML API function will return an array containing all the DNS Zones on the server
-     *
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListDNSZone XML API Call documentation
-     */
+    * Return a List of all DNS Zones on the server
+    *
+    * This XML API function will return an array containing all the DNS Zones on the server
+    *
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListDNSZone XML API Call documentation
+    */
     public function listzones()
     {
         return $this->xmlapi_query('listzones');
     }
 
     /**
-     * Return all records in a zone
-     *
-     * This function will return all records within a zone.
-     * @param string $domain The domain to return the records from.
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListOneZone XML API Call documentation
-     * @see editdnsrecord()
-     * @see getdnsrecord()
-     */
+    * Return all records in a zone
+    *
+    * This function will return all records within a zone.
+    * @param string $domain The domain to return the records from.
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListOneZone XML API Call documentation
+    * @see editdnsrecord()
+    * @see getdnsrecord()
+    */
     public function dumpzone($domain)
     {
         if (!isset($domain)) {
@@ -1300,14 +1300,14 @@ class Cpanel {
     }
 
     /**
-     * Return a Nameserver's IP
-     *
-     * This function will return a nameserver's IP
-     *
-     * @param string $nameserver The nameserver to lookup
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LookupIP XML API Call documentation
-     */
+    * Return a Nameserver's IP
+    *
+    * This function will return a nameserver's IP
+    *
+    * @param string $nameserver The nameserver to lookup
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LookupIP XML API Call documentation
+    */
     public function lookupnsip($nameserver)
     {
         if (!isset($nameserver)) {
@@ -1320,13 +1320,13 @@ class Cpanel {
     }
 
     /**
-     * Remove a line from a zone
-     *
-     * This function will remove the specified line from a zone
-     * @param string $zone The zone to remove a line from
-     * @param int $line The line to remove from the zone
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RemoveZone XML API Call documentation
-     */
+    * Remove a line from a zone
+    *
+    * This function will remove the specified line from a zone
+    * @param string $zone The zone to remove a line from
+    * @param int $line The line to remove from the zone
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RemoveZone XML API Call documentation
+    */
     public function removezonerecord($zone, $line)
     {
         if ( !isset($zone) || !isset($line) ) {
@@ -1339,13 +1339,13 @@ class Cpanel {
     }
 
     /**
-     * Reset a zone
-     *
-     * This function will reset a zone removing all custom records.  Subdomain records will be readded by scanning the userdata datastore.
-     * @param string $domain the domain name of the zone to reset
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ResetZone XML API Call documentation
-     */
+    * Reset a zone
+    *
+    * This function will reset a zone removing all custom records.  Subdomain records will be readded by scanning the userdata datastore.
+    * @param string $domain the domain name of the zone to reset
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ResetZone XML API Call documentation
+    */
     public function resetzone($domain)
     {
         if ( !isset($domain) ) {
@@ -1362,16 +1362,16 @@ class Cpanel {
     ####
 
     /**
-     * Add a new package
-     *
-     * This function will allow you to add a new package
-     * This function should be passed an associative array containing elements that define package parameters.
-     * These variables map directly to the parameters for the XML-API Call, please refer to the link below for a complete
-     * list of possible variable.  The "name" element is required.
-     * @param array $pkg an associative array containing package parameters
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddPackage XML API Call documentation
-     */
+    * Add a new package
+    *
+    * This function will allow you to add a new package
+    * This function should be passed an associative array containing elements that define package parameters.
+    * These variables map directly to the parameters for the XML-API Call, please refer to the link below for a complete
+    * list of possible variable.  The "name" element is required.
+    * @param array $pkg an associative array containing package parameters
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddPackage XML API Call documentation
+    */
     public function addpkg($pkg)
     {
         if (!isset($pkg['name'])) {
@@ -1384,13 +1384,13 @@ class Cpanel {
     }
 
     /**
-     * Remove a package
-     *
-     * This function allow you to delete a package
-     * @param string $pkgname The package you wish to delete
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeletePackage XML API Call documentation
-     */
+    * Remove a package
+    *
+    * This function allow you to delete a package
+    * @param string $pkgname The package you wish to delete
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeletePackage XML API Call documentation
+    */
     public function killpkg($pkgname)
     {
         if (!isset($pkgname)) {
@@ -1403,15 +1403,15 @@ class Cpanel {
     }
 
     /**
-     * Edit a package
-     *
-     * This function allows you to change a package's paremeters.  This is passed an associative array defining
-     * the parameters for the package.  The keys within this array map directly to the XML-API call, please see the link
-     * below for a list of possible keys within this package.  The name element is required.
-     * @param array $pkg An associative array containing new parameters for the package
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditPackage XML API Call documentation
-     */
+    * Edit a package
+    *
+    * This function allows you to change a package's paremeters.  This is passed an associative array defining
+    * the parameters for the package.  The keys within this array map directly to the XML-API call, please see the link
+    * below for a list of possible keys within this package.  The name element is required.
+    * @param array $pkg An associative array containing new parameters for the package
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/EditPackage XML API Call documentation
+    */
     public function editpkg($pkg)
     {
         if (!$isset($pkg['name'])) {
@@ -1424,12 +1424,12 @@ class Cpanel {
     }
 
     /**
-     * List Packages
-     *
-     * This function will list all packages available to the user
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListPackages XML API Call documentation
-     */
+    * List Packages
+    *
+    * This function will list all packages available to the user
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListPackages XML API Call documentation
+    */
     public function listpkgs()
     {
         return $this->xmlapi_query('listpkgs');
@@ -1440,16 +1440,16 @@ class Cpanel {
     ####
 
     /**
-     * Make a user a reseller
-     *
-     * This function will allow you to mark an account as having reseller privileges
-     * @param string $username The username of the account you wish to add reseller privileges to
-     * @param int $makeowner Boolean 1 or 0 defining whether the account should own itself or not
-     * @see setacls()
-     * @see setresellerlimits()
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddResellerPrivileges XML API Call documentation
-     */
+    * Make a user a reseller
+    *
+    * This function will allow you to mark an account as having reseller privileges
+    * @param string $username The username of the account you wish to add reseller privileges to
+    * @param int $makeowner Boolean 1 or 0 defining whether the account should own itself or not
+    * @see setacls()
+    * @see setresellerlimits()
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddResellerPrivileges XML API Call documentation
+    */
     public function setupreseller($username, $makeowner = true)
     {
         if (!isset($username)) {
@@ -1465,15 +1465,15 @@ class Cpanel {
     }
 
     /**
-     * Create a New ACL List
-     *
-     * This function allows you to create a new privilege set for reseller accounts.  This is passed an
-     * Associative Array containing the configuration information for this variable.  Please see the XML API Call documentation
-     * For more information.  "acllist" is a required element within this array
-     * @param array $acl an associative array describing the parameters for the ACL to be create
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CreateResellerACLList XML API Call documentation
-     */
+    * Create a New ACL List
+    *
+    * This function allows you to create a new privilege set for reseller accounts.  This is passed an
+    * Associative Array containing the configuration information for this variable.  Please see the XML API Call documentation
+    * For more information.  "acllist" is a required element within this array
+    * @param array $acl an associative array describing the parameters for the ACL to be create
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/CreateResellerACLList XML API Call documentation
+    */
     public function saveacllist($acl)
     {
         if (!isset($acl['acllist'])) {
@@ -1487,38 +1487,38 @@ class Cpanel {
 
 
     /**
-     * List available saved ACLs
-     *
-     * This function will return a list of Saved ACLs for reseller accounts
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListCurrentResellerACLLists XML API Call documentation
-     */
+    * List available saved ACLs
+    *
+    * This function will return a list of Saved ACLs for reseller accounts
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListCurrentResellerACLLists XML API Call documentation
+    */
     public function listacls()
     {
         return $this->xmlapi_query('listacls');
     }
 
     /**
-     * List Resellers
-     *
-     * This function will return a list of resellers on the server
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListResellerAccounts XML API Call documentation
-     */
+    * List Resellers
+    *
+    * This function will return a list of resellers on the server
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListResellerAccounts XML API Call documentation
+    */
     public function listresellers()
     {
         return $this->xmlapi_query('listresellers');
     }
 
     /**
-     * Get a reseller's statistics
-     *
-     * This function will return general information on a reseller and all it's account individually such as disk usage and bandwidth usage
-     *
-     * @param string $username The reseller to be checked
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListResellersAccountsInformation XML API Call documentation
-     */
+    * Get a reseller's statistics
+    *
+    * This function will return general information on a reseller and all it's account individually such as disk usage and bandwidth usage
+    *
+    * @param string $username The reseller to be checked
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListResellersAccountsInformation XML API Call documentation
+    */
     public function resellerstats($username)
     {
         if (!isset($username)) {
@@ -1531,14 +1531,14 @@ class Cpanel {
     }
 
     /**
-     * Remove Reseller Privileges
-     *
-     * This function will remove an account's reseller privileges, this does not remove the account.
-     *
-     * @param string $username The username to remove reseller privileges from
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RemoveResellerPrivileges XML API Call documentation
-     */
+    * Remove Reseller Privileges
+    *
+    * This function will remove an account's reseller privileges, this does not remove the account.
+    *
+    * @param string $username The username to remove reseller privileges from
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RemoveResellerPrivileges XML API Call documentation
+    */
     public function unsetupreseller($username)
     {
         if (!isset($username)) {
@@ -1551,15 +1551,15 @@ class Cpanel {
     }
 
     /**
-     * Set a reseller's privileges
-     *
-     * This function will allow you to set what parts of WHM a reseller has access to.  This is passed an associative array
-     * containing the privleges that this reseller should have access to.  These map directly to the parameters passed to the XML API Call
-     * Please view the XML API Call documentation for more information.  "reseller" is the only required element within this array
-     * @param array $acl An associative array containing all the ACL information for the reseller
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellersACLList XML API Call documentation
-     */
+    * Set a reseller's privileges
+    *
+    * This function will allow you to set what parts of WHM a reseller has access to.  This is passed an associative array
+    * containing the privleges that this reseller should have access to.  These map directly to the parameters passed to the XML API Call
+    * Please view the XML API Call documentation for more information.  "reseller" is the only required element within this array
+    * @param array $acl An associative array containing all the ACL information for the reseller
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellersACLList XML API Call documentation
+    */
     public function setacls($acl)
     {
         if (!isset($acl['reseller'])) {
@@ -1572,16 +1572,16 @@ class Cpanel {
     }
 
     /**
-     * Terminate a Reseller's Account
-     *
-     * This function will terminate a reseller's account and all accounts owned by the reseller
-     *
-     * @param string $reseller the name of the reseller to terminate
-     * @param boolean $terminatereseller Passing this as true will terminate the the reseller's account as well as all the accounts owned by the reseller
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/TerminateResellerandAccounts XML API Call documentation
-     *
-     **/
+    * Terminate a Reseller's Account
+    *
+    * This function will terminate a reseller's account and all accounts owned by the reseller
+    *
+    * @param string $reseller the name of the reseller to terminate
+    * @param boolean $terminatereseller Passing this as true will terminate the the reseller's account as well as all the accounts owned by the reseller
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/TerminateResellerandAccounts XML API Call documentation
+    *
+    **/
     public function terminatereseller($reseller, $terminatereseller = true)
     {
         if (!isset($reseller)) {
@@ -1598,15 +1598,15 @@ class Cpanel {
     }
 
     /**
-     * Set a reseller's dedicated IP addresses
-     *
-     * This function will set a reseller's dedicated IP addresses.  If an IP is not passed to this function,
-     * it will reset the reseller to use the server's main shared IP address.
-     * @param string $user The username of the reseller to change dedicated IPs for
-     * @param string $ip The IP to assign to the  reseller, this can be a comma-seperated list of IPs to allow for multiple IP addresses
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerIps XML API Call documentation
-     */
+    * Set a reseller's dedicated IP addresses
+    *
+    * This function will set a reseller's dedicated IP addresses.  If an IP is not passed to this function,
+    * it will reset the reseller to use the server's main shared IP address.
+    * @param string $user The username of the reseller to change dedicated IPs for
+    * @param string $ip The IP to assign to the  reseller, this can be a comma-seperated list of IPs to allow for multiple IP addresses
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerIps XML API Call documentation
+    */
     public function setresellerips($user, $ip = null)
     {
         if (!isset($user) ) {
@@ -1623,18 +1623,18 @@ class Cpanel {
     }
 
     /**
-     * Set Accounting Limits for a reseller account
-     *
-     * This function allows you to define limits for reseller accounts not included with in access control such as
-     * the number of accounts a reseller is allowed to create, the amount of disk space to use.
-     * This function is passed an associative array defining these limits, these map directly to the parameters for the XML API
-     * Call, please refer to the XML API Call documentation for more information.  The only required parameters is "user"
-     *
-     * @param array $reseller_cfg An associative array containing configuration information for the specified reseller
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerLimits XML API Call documentation
-     *
-     */
+    * Set Accounting Limits for a reseller account
+    *
+    * This function allows you to define limits for reseller accounts not included with in access control such as
+    * the number of accounts a reseller is allowed to create, the amount of disk space to use.
+    * This function is passed an associative array defining these limits, these map directly to the parameters for the XML API
+    * Call, please refer to the XML API Call documentation for more information.  The only required parameters is "user"
+    *
+    * @param array $reseller_cfg An associative array containing configuration information for the specified reseller
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerLimits XML API Call documentation
+    *
+    */
     public function setresellerlimits( $reseller_cfg )
     {
         if ( !isset($reseller_cfg['user'] ) ) {
@@ -1647,15 +1647,15 @@ class Cpanel {
     }
 
     /**
-     * Set a reseller's main IP
-     *
-     * This function will allow you to set a reseller's main IP.  By default all accounts created by this reseller
-     * will be created on this IP
-     * @param string $reseller the username of the reseller to change the main IP of
-     * @param string $ip The ip you would like this reseller to create accounts on by default
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerMainIp XML API Call documentation
-     */
+    * Set a reseller's main IP
+    *
+    * This function will allow you to set a reseller's main IP.  By default all accounts created by this reseller
+    * will be created on this IP
+    * @param string $reseller the username of the reseller to change the main IP of
+    * @param string $ip The ip you would like this reseller to create accounts on by default
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerMainIp XML API Call documentation
+    */
     public function setresellermainip($reseller, $ip)
     {
         if ( !isset($reseller) || !isset($ip) ) {
@@ -1668,17 +1668,17 @@ class Cpanel {
     }
 
     /**
-     * Set reseller package limits
-     *
-     * This function allows you to define which packages a reseller has access to use
-     * @param string $user The reseller you wish to define package limits for
-     * @param boolean $no_limit Whether or not you wish this reseller to have packages limits
-     * @param string $package if $no_limit is false, then the package you wish to modify privileges for
-     * @param boolean $allowed if $no_limit is false, then defines if the reseller should have access to the package or not
-     * @param int $number if $no_limit is false, then defines the number of account a reseller can create of a specific package
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerPkgLimit XML API Call documentation
-     */
+    * Set reseller package limits
+    *
+    * This function allows you to define which packages a reseller has access to use
+    * @param string $user The reseller you wish to define package limits for
+    * @param boolean $no_limit Whether or not you wish this reseller to have packages limits
+    * @param string $package if $no_limit is false, then the package you wish to modify privileges for
+    * @param boolean $allowed if $no_limit is false, then defines if the reseller should have access to the package or not
+    * @param int $number if $no_limit is false, then defines the number of account a reseller can create of a specific package
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerPkgLimit XML API Call documentation
+    */
     public function setresellerpackagelimits($user, $no_limit, $package = null, $allowed = null, $number = null)
     {
         if (!isset($user) || !isset($no_limit) ) {
@@ -1713,14 +1713,14 @@ class Cpanel {
     }
 
     /**
-     * Suspend a reseller and all accounts owned by a reseller
-     *
-     * This function, when called will suspend a reseller account and all account owned by said reseller
-     * @param string $reseller The reseller account to be suspended
-     * @param string $reason (optional) The reason for suspending the reseller account
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SuspendReseller XML API Call documentation
-     */
+    * Suspend a reseller and all accounts owned by a reseller
+    *
+    * This function, when called will suspend a reseller account and all account owned by said reseller
+    * @param string $reseller The reseller account to be suspended
+    * @param string $reason (optional) The reason for suspending the reseller account
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SuspendReseller XML API Call documentation
+    */
     public function suspendreseller($reseller, $reason = null)
     {
         if (!isset($reseller) ) {
@@ -1738,13 +1738,13 @@ class Cpanel {
 
 
     /**
-     * Unsuspend a Reseller Account
-     *
-     * This function will unsuspend a reseller account and all accounts owned by the reseller in question
-     * @param string $user The username of the reseller to be unsuspended
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/UnsuspendReseller XML API Call documentation
-     */
+    * Unsuspend a Reseller Account
+    *
+    * This function will unsuspend a reseller account and all accounts owned by the reseller in question
+    * @param string $user The username of the reseller to be unsuspended
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/UnsuspendReseller XML API Call documentation
+    */
     public function unsuspendreseller($user)
     {
         if (!isset($user) ) {
@@ -1757,13 +1757,13 @@ class Cpanel {
     }
 
     /**
-     * Get the number of accounts owned by a reseller
-     *
-     * This function will return the number of accounts owned by a reseller account, along with information such as the number of active, suspended and accounting limits
-     * @param string $user The username of the reseller to get account information from
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AcctCounts XML API Call documentation
-     */
+    * Get the number of accounts owned by a reseller
+    *
+    * This function will return the number of accounts owned by a reseller account, along with information such as the number of active, suspended and accounting limits
+    * @param string $user The username of the reseller to get account information from
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AcctCounts XML API Call documentation
+    */
     public function acctcounts($user)
     {
         if (!isset($user)) {
@@ -1776,15 +1776,15 @@ class Cpanel {
     }
 
     /**
-     * Set a reseller's nameservers
-     *
-     * This function allows you to change the nameservers that account created by a specific reseller account will use.
-     * If this function is not passed a $nameservers parameter, it will reset the nameservers for the reseller to the servers's default
-     * @param string $user The username of the reseller account to grab reseller accounts from
-     * @param string $nameservers A comma seperate list of nameservers
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerNameservers XML API Call documentation
-     */
+    * Set a reseller's nameservers
+    *
+    * This function allows you to change the nameservers that account created by a specific reseller account will use.
+    * If this function is not passed a $nameservers parameter, it will reset the nameservers for the reseller to the servers's default
+    * @param string $user The username of the reseller account to grab reseller accounts from
+    * @param string $nameservers A comma seperate list of nameservers
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResellerNameservers XML API Call documentation
+    */
     public function setresellernameservers($user, $nameservers = null)
     {
         if (!isset($user)) {
@@ -1805,24 +1805,24 @@ class Cpanel {
     ####
 
     /**
-     * Get a server's hostname
-     *
-     * This function will return a server's hostname
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DisplayServerHostname XML API Call documentation
-     */
+    * Get a server's hostname
+    *
+    * This function will return a server's hostname
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DisplayServerHostname XML API Call documentation
+    */
     public function gethostname()
     {
         return $this->xmlapi_query('gethostname');
     }
 
     /**
-     * Get the version of cPanel running on the server
-     *
-     * This function will return the version of cPanel/WHM running on the remote system
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DisplaycPanelWHMVersion XML API Call documentation
-     */
+    * Get the version of cPanel running on the server
+    *
+    * This function will return the version of cPanel/WHM running on the remote system
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DisplaycPanelWHMVersion XML API Call documentation
+    */
     public function version()
     {
         return $this->xmlapi_query('version');
@@ -1830,26 +1830,26 @@ class Cpanel {
 
 
     /**
-     * Get Load Average
-     *
-     * This function will return the loadavg of the remote system
-     *
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LoadAvg XML API Call documentation
-     */
+    * Get Load Average
+    *
+    * This function will return the loadavg of the remote system
+    *
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/LoadAvg XML API Call documentation
+    */
     public function loadavg()
     {
         return $this->xmlapi_query('loadavg');
     }
 
     /**
-     * Get a list of languages on the remote system
-     *
-     * This function will return a list of available langauges for the cPanel interface
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GetLangList XML API Call documentation
-     *
-     */
+    * Get a list of languages on the remote system
+    *
+    * This function will return a list of available langauges for the cPanel interface
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GetLangList XML API Call documentation
+    *
+    */
     public function getlanglist()
     {
         return $this->xmlapi_query('getlanglist');
@@ -1860,13 +1860,13 @@ class Cpanel {
     ####
 
     /**
-     * Reboot server
-     *
-     * This function will reboot the server
-     * @param boolean $force This will determine if the server should be given a graceful or forceful reboot
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RebootServer XML API Call documentation
-     */
+    * Reboot server
+    *
+    * This function will reboot the server
+    * @param boolean $force This will determine if the server should be given a graceful or forceful reboot
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RebootServer XML API Call documentation
+    */
     public function reboot($force = false)
     {
         if ($force) {
@@ -1877,14 +1877,14 @@ class Cpanel {
     }
 
     /**
-     * Add an IP to a server
-     *
-     * This function will add an IP alias to your server
-     * @param string $ip The IP to be added
-     * @param string $netmask The netmask of the IP to be added
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddIPAddress XML API Call documentation
-     */
+    * Add an IP to a server
+    *
+    * This function will add an IP alias to your server
+    * @param string $ip The IP to be added
+    * @param string $netmask The netmask of the IP to be added
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/AddIPAddress XML API Call documentation
+    */
     public function addip($ip, $netmask)
     {
         if (!isset($ip) || !isset($netmask)) {
@@ -1898,15 +1898,15 @@ class Cpanel {
 
     // This function allows you to delete an IP address from your server.
     /**
-     * Delete an IP from a server
-     *
-     * Remove an IP from the server
-     * @param string $ip The IP to remove
-     * @param string $ethernetdev The ethernet device that the IP is bound to
-     * @param bool $skipifshutdown Whether the function should remove the IP even if the ethernet interface is down
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteIPAddress XML API Call documentation
-     */
+    * Delete an IP from a server
+    *
+    * Remove an IP from the server
+    * @param string $ip The IP to remove
+    * @param string $ethernetdev The ethernet device that the IP is bound to
+    * @param bool $skipifshutdown Whether the function should remove the IP even if the ethernet interface is down
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteIPAddress XML API Call documentation
+    */
     public function delip($ip, $ethernetdev = null, $skipifshutdown = false)
     {
         $args = array();
@@ -1925,25 +1925,25 @@ class Cpanel {
     }
 
     /**
-     * List IPs
-     *
-     * This should return a list of IPs on a server
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteIPAddress XML API Call documentation
-     */
+    * List IPs
+    *
+    * This should return a list of IPs on a server
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/DeleteIPAddress XML API Call documentation
+    */
     public function listips()
     {
         return $this->xmlapi_query('listips');
     }
 
     /**
-     * Set Hostname
-     *
-     * This function will allow you to set the hostname of the server
-     * @param string $hostname the hostname that should be assigned to the serve
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetHostname XML API Call documentation
-     */
+    * Set Hostname
+    *
+    * This function will allow you to set the hostname of the server
+    * @param string $hostname the hostname that should be assigned to the serve
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetHostname XML API Call documentation
+    */
     public function sethostname($hostname)
     {
         if (!isset($hostname)) {
@@ -1956,16 +1956,16 @@ class Cpanel {
     }
 
     /**
-     * Set the resolvers used by the server
-     *
-     * This function will set the resolvers in /etc/resolv.conf for the server
-     * @param string $nameserver1 The IP of the first nameserver to use
-     * @param string $nameserver2 The IP of the second namesever to use
-     * @param string $nameserver3 The IP of the third nameserver to use
-     * @param string $nameserver4 The IP of the forth nameserver to use
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResolvers XML API Call documentation
-     */
+    * Set the resolvers used by the server
+    *
+    * This function will set the resolvers in /etc/resolv.conf for the server
+    * @param string $nameserver1 The IP of the first nameserver to use
+    * @param string $nameserver2 The IP of the second namesever to use
+    * @param string $nameserver3 The IP of the third nameserver to use
+    * @param string $nameserver4 The IP of the forth nameserver to use
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/SetResolvers XML API Call documentation
+    */
     public function setresolvers($nameserver1, $nameserver2 = null, $nameserver3 = null)
     {
         $args = array();
@@ -1986,15 +1986,15 @@ class Cpanel {
     }
 
     /**
-     * Display bandwidth Usage
-     *
-     * This function will return all bandwidth usage information for the server,
-     * The arguments for this can be passed in via an associative array, the elements of this array map directly to the
-     * parameters of the call, please see the XML API Call documentation for more information
-     * @param array $args The configuration for what bandwidth information to display
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ShowBw XML API Call documentation
-     */
+    * Display bandwidth Usage
+    *
+    * This function will return all bandwidth usage information for the server,
+    * The arguments for this can be passed in via an associative array, the elements of this array map directly to the
+    * parameters of the call, please see the XML API Call documentation for more information
+    * @param array $args The configuration for what bandwidth information to display
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ShowBw XML API Call documentation
+    */
     public function showbw($args = null)
     {
         if (is_array($args)) {
@@ -2032,13 +2032,13 @@ class Cpanel {
     ####
 
     /**
-     * Restart a Service
-     *
-     * This function allows you to restart a service on the server
-     * @param string $service the service that you wish to restart please view the XML API Call documentation for acceptable values to this parameters
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RestartService XML API Call documentation
-     */
+    * Restart a Service
+    *
+    * This function allows you to restart a service on the server
+    * @param string $service the service that you wish to restart please view the XML API Call documentation for acceptable values to this parameters
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/RestartService XML API Call documentation
+    */
     public function restartsrv($service)
     {
         if (!isset($service)) {
@@ -2051,15 +2051,15 @@ class Cpanel {
     }
 
     /**
-     * Service Status
-     *
-     * This function will return the status of all services on the and whether they are running or not
-     * @param string $service A single service to filter for.
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ServiceStatus XML API Call documentation
-     */
+    * Service Status
+    *
+    * This function will return the status of all services on the and whether they are running or not
+    * @param string $service A single service to filter for.
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ServiceStatus XML API Call documentation
+    */
     public function servicestatus($args=array())
-    {
+     {
         if (!empty($args) && !is_array($args)) {
             $args = array('service'=>$args);
         } elseif (!is_array($args)) {
@@ -2067,18 +2067,18 @@ class Cpanel {
         }
 
         return $this->xmlapi_query('servicestatus', $args);
-    }
+     }
 
     /**
-     * Configure A Service
-     *
-     * This function will allow you to enabled or disable services along with their monitoring by chkservd
-     * @param string $service The service to be monitored
-     * @param bool $enabled Whether the service should be enabled or not
-     * @param bool $monitored Whether the service should be monitored or not
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ConfigureService XML API Call documentation
-     */
+    * Configure A Service
+    *
+    * This function will allow you to enabled or disable services along with their monitoring by chkservd
+    * @param string $service The service to be monitored
+    * @param bool $enabled Whether the service should be enabled or not
+    * @param bool $monitored Whether the service should be monitored or not
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ConfigureService XML API Call documentation
+    */
     public function configureservice($service, $enabled = true, $monitored = true)
     {
         if (!isset($service)) {
@@ -2109,13 +2109,13 @@ class Cpanel {
     ####
 
     /**
-     * Display information on an SSL host
-     *
-     * This function will return information on an SSL Certificate, CSR, cabundle and SSL key for a specified domain
-     * @param array $args Configuration information for the SSL certificate, please see XML API Call documentation for required values
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/FetchSSL XML API Call documentation
-     */
+    * Display information on an SSL host
+    *
+    * This function will return information on an SSL Certificate, CSR, cabundle and SSL key for a specified domain
+    * @param array $args Configuration information for the SSL certificate, please see XML API Call documentation for required values
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/FetchSSL XML API Call documentation
+    */
     public function fetchsslinfo($args)
     {
         if ( (isset($args['domain']) && isset($args['crtdata'])) || (!isset($args['domain']) && !isset($args['crtdata'])) ) {
@@ -2130,13 +2130,13 @@ class Cpanel {
     }
 
     /**
-     * Generate an SSL Certificate
-     *
-     * This function will generate an SSL Certificate, the arguments for this map directly to the call for the XML API call.  Please consult the XML API Call documentation for more information
-     * @param array $args the configuration for the SSL Certificate being generated
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GenerateSSL XML API Call documentation
-     */
+    * Generate an SSL Certificate
+    *
+    * This function will generate an SSL Certificate, the arguments for this map directly to the call for the XML API call.  Please consult the XML API Call documentation for more information
+    * @param array $args the configuration for the SSL Certificate being generated
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/GenerateSSL XML API Call documentation
+    */
     public function generatessl($args)
     {
         if (!isset($args['xemail']) || !isset($args['host']) || !isset($args['country']) || !isset($args['state']) || !isset($args['city']) || !isset($args['co']) || !isset($args['cod']) || !isset($args['email']) || !isset($args['pass'])) {
@@ -2149,14 +2149,14 @@ class Cpanel {
     }
 
     /**
-     * Install an SSL certificate
-     *
-     * This function will allow you to install an SSL certificate that is uploaded via the $argument parameter to this call.  The arguments for this call map directly to the parameters for the XML API call,
-     * please consult the XML API Call documentation for more information.
-     * @param array $args The configuration for the SSL certificate
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/InstallSSL XML API Call documentation
-     */
+    * Install an SSL certificate
+    *
+    * This function will allow you to install an SSL certificate that is uploaded via the $argument parameter to this call.  The arguments for this call map directly to the parameters for the XML API call,
+    * please consult the XML API Call documentation for more information.
+    * @param array $args The configuration for the SSL certificate
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/InstallSSL XML API Call documentation
+    */
     public function installssl($args)
     {
         if (!isset($args['user']) || !isset($args['domain']) || !isset($args['cert']) || !isset($args['key']) || !isset($args['cab']) || !isset($args['ip'])) {
@@ -2169,12 +2169,12 @@ class Cpanel {
     }
 
     /**
-     * List SSL Certs
-     *
-     * This function will list all SSL certificates installed on the server
-     * @return mixed
-     * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListSSL XML API Call documentation
-     */
+    * List SSL Certs
+    *
+    * This function will list all SSL certificates installed on the server
+    * @return mixed
+    * @link http://docs.cpanel.net/twiki/bin/view/AllDocumentation/AutomationIntegration/ListSSL XML API Call documentation
+    */
     public function listcrts()
     {
         return $this->xmlapi_query('listcrts');
@@ -2326,7 +2326,7 @@ class Cpanel {
             return false;
         }
         if (is_array($args)) {
-            $display = '';
+        $display = '';
             foreach ($args as $key => $value) {
                 $display .= $value . '|';
             }
@@ -2336,219 +2336,6 @@ class Cpanel {
         }
 
         return $this->api2_query($username, 'StatsBar', 'stat', $values);
-    }
-
-    //Extract files
-    public function cpextract($account, $sourcefiles, $destfiles = "/")
-    {
-        if (!isset($account)) {
-            error_log('cpextract requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        return $this->api2_query($account, "Fileman", "fileop", array('filelist'=>"1", 'multiform'=>"1", 'doubledecode'=>"0", 'op'=>"extract", 'metadata'=>"undefined", 'sourcefiles'=>$sourcefiles, 'destfiles'=>$destfiles) );
-    }
-
-    //Compress files
-    public function cpcompress($account, $sourcefiles, $destfiles = "/")
-    {
-        if (!isset($account)) {
-            error_log('cpcompress requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-        $args = array(
-            'sourcefiles'      =>  $sourcefiles,
-            'destfiles' => $destfiles,
-            'metadata'=>'tar.gz',
-            'op' => 'compress'
-        );
-        try {
-            //return $this->api2_query($account, "Fileman", "fileop", array('filelist'=>"1", 'multiform'=>"1", 'doubledecode'=>"0", 'op'=>"compress", 'metadata'=>"tar.gz", 'sourcefiles'=>$sourcefiles, 'destfiles'=>$destfiles) );
-            return $this->api2_query($account, "Fileman", "fileop", $args);
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
-    }
-
-    //Remove file or folder
-    public function cpdelete($account, $sourcefiles)
-    {
-        if (!isset($account)) {
-            error_log('cpdelete requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        return $this->api2_query($account, "Fileman", "fileop", array('op'=>"unlink", 'sourcefiles'=>$sourcefiles));
-
-    }
-
-    //Rename file or folder
-    public function cprename($account, $sourcefiles, $destfiles)
-    {
-        if (!isset($account)) {
-            error_log('cprename requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        return $this->api2_query($account, "Fileman", "fileop", array('filelist'=>"1", 'multiform'=>"1", 'doubledecode'=>"0", 'op'=>"rename", 'metadata'=>"[object HTMLTableRowElement]", 'sourcefiles'=>$sourcefiles, 'destfiles'=>$destfiles) );
-    }
-
-    //Copy file or folder
-    public function cpcopy($account, $sourcefiles, $destfiles)
-    {
-        if (!isset($account)) {
-            error_log('cpcopy requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        return $this->api2_query($account, "Fileman", "fileop", array('filelist'=>"1", 'multiform'=>"1", 'doubledecode'=>"0", 'op'=>"copy", 'metadata'=>"undefined", 'sourcefiles'=>$sourcefiles, 'destfiles'=>$destfiles) );
-    }
-
-    //Move file or folder
-    public function movefiles($account, $opdir, $opfile)
-    {
-        if (!isset($account)) {
-            error_log('movefiles requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        $args = array(
-            "/".$opdir,
-            "/".$opfile,
-            "/",
-            "move"
-        );
-
-        return $this->api1_query($account, "Fileman", "dofileop", $args);
-
-
-    }
-
-    //Get home dir
-    private function getHomeDir($account)
-    {
-        if (!isset($account)) {
-            error_log('cpgetdir requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        return $this->api2_query($account, "Fileman", "getdir");
-    }
-
-    public function cpgetdir($account){
-
-        try {
-            $homedir_details =  $this->getHomeDir($account);
-            $homedir_details = json_decode($homedir_details, true);
-            $homedir = urldecode($homedir_details['cpanelresult']['data'][0]['dir']);
-            //$homecollection = preg_split("/\//",$homedir);
-            //$homedir = $homecollection[1];
-            return $homedir;
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
-    }
-
-    //Fullbackup
-    //Fileman::fullbackup( dest, server, user, pass, email, port, rdir )
-    public function fullbackup($account, $dest = "passiveftp", $server, $user, $pass, $email = "cpanel@dzhousing.com", $port = 21, $rdir = "/")
-    {
-        if (!isset($account)) {
-            error_log('fullbackup requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-        $args = array(
-            $dest,
-            $server,
-            $user,
-            $pass,
-            $email,
-            $port,
-            $rdir
-        );
-        try {
-            return $this->api1_query($account, "Fileman", "fullbackup", $args);
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
-    }
-
-    //listfullbackups
-    //Fileman::listfullbackups()
-    public function listfullbackups($account)
-    {
-        if (!isset($account)) {
-            error_log('listfullbackups requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-
-        try {
-            return $this->api1_query($account, "Fileman", "listfullbackups");
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
-    }
-    //Save the contents of a string to a file. This function is not available in demo mode.
-    public function fmsavefile($account, $dir = '/', $file = 'cpbackup-exclude.conf', $page, $doubledecode = 0, $stripnewline = 0)
-    {
-        if (!isset($account)) {
-            error_log('fmsavefile requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-        $args = array(
-            $dir, // (string) The directory that contians the file to be modified.
-            $file, // (string) The name of the file to be modified.
-            $page,  // (string) The string to be saved to the file.
-            $doubledecode, // (boolean) Specifying 1 to this parameter causes the function to attempt to decode URL values in dir and file.
-            $stripnewline // (boolean) Specifying 1 to this parameter causes new lines to be stripped.
-        );
-        try {
-            return $this->api1_query($account, "Fileman", "fmsavefile", $args);
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
-    }
-
-    public function extractfile($account, $file, $ext = null)
-    {
-        if (!isset($account)) {
-            error_log('extractfile requires that a account and sourcefiles is passed to it');
-
-            return false;
-        }
-        if ($ext == null)
-            $args = array(
-                "/", // The directory that contains the archive to be extracted.
-                $file.".tar.gz" // (string) The name of the file to be extracted.
-            );
-        else
-            $args = array(
-                "/", // The directory that contains the archive to be extracted.
-                "homedir.tar" // (string) The name of the file to be extracted.
-            );
-        try {
-
-            $result = json_decode($this->api1_query($account, "Fileman", "extractfile", $args), true);
-            return $result[data][result];
-        } catch (Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }
-
     }
 
 }
