@@ -1,4 +1,4 @@
-cpanel
+cPanel API package for Laravel 4
 ======
 
 cPanel API package for Laravel 4 by Adel KEDJOUR (a.kedjour@corex.dz) 
