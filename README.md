@@ -79,14 +79,14 @@ class CpanelController extends Controller {
 
 	public function getListAccounts()
 	{        
-	        try {
+	     try {
 			
-				$listaccts = array(json_decode(Cpanel::listaccts(), true));
-	                return $listaccts;
+		      $listaccts = array(json_decode(Cpanel::listaccts(), true));
+	              return $listaccts;
 				
-	        } catch (Exception $e) {
-	            	return 'Exception: ' .$e->getMessage();
-	        }		
+	     } catch (Exception $e) {
+	            return 'Exception: ' .$e->getMessage();
+	     }		
         
 	}
 	
