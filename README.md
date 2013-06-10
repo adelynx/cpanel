@@ -75,10 +75,6 @@ That's it! You're all set to go.
 ```php
 <?php
 
-<?php
-
-<?php
-
 class CpanelController extends Controller {
 
     public function getListAccounts()
