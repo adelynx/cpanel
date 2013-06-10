@@ -9,7 +9,7 @@ cPanel API package for Laravel 4 by Adel KEDJOUR (a.kedjour@corex.dz)
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require `adelynx/cpanel`.
 
     "require": {
-  	"laravel/framework": "4.0.*",
+  		"laravel/framework": "4.0.*",
 		"adelynx/cpanel": "dev-master"
 	}
 
